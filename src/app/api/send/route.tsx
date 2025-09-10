@@ -1,14 +1,16 @@
 import { Resend } from "resend";
 import * as React from "react";
 import EmailTemplate from "../../../../components/email-template";
-import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
 const resend = new Resend(process.env.EMAIL_KEY!);
 
-export async function POST(req: NextRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest) {
   if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
+    return NextResponse.json(
+      { message: "Method Not Allowed" },
+      { status: 500 }
+    );
   }
   try {
     const body = await req.json();
