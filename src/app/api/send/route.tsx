@@ -3,10 +3,10 @@ import * as React from "react";
 import EmailTemplate from "../../../../components/email-template";
 import { NextRequest, NextResponse } from "next/server";
 
-const resend = new Resend(process.env.EMAIL_KEY!);
+const resend = new Resend(process.env.NEXT_PUBLIC_EMAIL_KEY!);
 
 export async function POST(req: NextRequest) {
-  console.log("Received request: === >", process.env.EMAIL_KEY);
+  console.log("Received request: 11=== >", process.env.NEXT_PUBLIC_EMAIL_KEY);
   if (req.method !== "POST") {
     return NextResponse.json(
       { message: "Method Not Allowed" },
