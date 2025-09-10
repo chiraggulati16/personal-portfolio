@@ -317,6 +317,7 @@ const Home = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    console.log("Received request: === >", process.env.EMAIL_KEY);
     try {
       const res = await fetch("/api/send", {
         method: "POST",

@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 const resend = new Resend(process.env.EMAIL_KEY!);
 
 export async function POST(req: NextRequest) {
-  console.log("Received request:", process.env.EMAIL);
+  console.log("Received request: === >", process.env.EMAIL_KEY);
   if (req.method !== "POST") {
     return NextResponse.json(
       { message: "Method Not Allowed" },
