@@ -12,7 +12,6 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
   }
   try {
     const body = await req.json();
-    console.log("Request body:", body);
     const { data, error } = await resend.emails.send({
       from: `${body.name} <onboarding@resend.dev>`,
       to: ["chirag.gulati282@gmail.com"],
@@ -21,7 +20,6 @@ export async function POST(req: NextRequest, res: NextApiResponse) {
     });
 
     if (error) {
-      console.log("Error sending email:", error);
       return NextResponse.json(
         { message: "Failed to send email", error },
         { status: 500 }
