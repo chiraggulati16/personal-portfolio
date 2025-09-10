@@ -4,7 +4,7 @@ import EmailTemplate from "../../../../components/email-template";
 import { NextApiRequest, NextApiResponse } from "next";
 import { NextRequest, NextResponse } from "next/server";
 
-const resend = new Resend("re_5pto4UPF_2DUbsUTgfDgYDzEYioKf21UC");
+const resend = new Resend(process.env.EMAIL_KEY!);
 
 export async function POST(req: NextRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
