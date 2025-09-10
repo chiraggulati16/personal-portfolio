@@ -1,6 +1,12 @@
 "use client";
 /* eslint-disable */
-import React, { useState, useEffect, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  ChangeEvent,
+  FormEvent,
+} from "react";
 import {
   ChevronDown,
   Github,
@@ -41,6 +47,14 @@ const Home = () => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const heroRef = useRef(null);
 
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
   // Particle system for canvas
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -164,7 +178,6 @@ const Home = () => {
     };
   }, []);
 
-
   const skills = [
     {
       name: "React Native",
@@ -242,11 +255,11 @@ const Home = () => {
 
   const experience = [
     {
-      company: "Infosys Limited",
-      position: "Technology Analyst",
-      duration: "02/2023 - 09/2024",
+      company: "ABC",
+      position: "Senior Developer",
+      duration: "02/2023 - 06/2024",
 
-      technologies: ["React Native", "Javascript", "Typescript"],
+      technologies: ["React Native", "Javascript", "Typescript", "Next.js"],
       achievements: [
         "Develop and maintain high-performance React Native applications for iOS and Android platforms.",
         "Optimize app performance by profiling and identifying bottlenecks, implementing performance-enhancing techniques.",
@@ -257,9 +270,9 @@ const Home = () => {
       ],
     },
     {
-      company: "Softprodigy System Solutions",
+      company: "ABC",
       position: "Associate Software Engineer",
-      duration: "06/2021 - 01/2023",
+      duration: "06/2021 - 01/2022",
       technologies: ["React Native", "Javascript", "Android", "Java", "Kotlin"],
       achievements: [
         "Built responsive and interactive mobile applications using React Native.",
@@ -290,6 +303,36 @@ const Home = () => {
     setCurrentProjectIndex(
       (prev) => (prev - 1 + projects.length) % projects.length
     );
+  };
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await res.json();
+
+      if (res.ok) {
+        setShowSuccessPopup(true);
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      }
+    } catch (err) {
+
+    }
   };
 
   return (
@@ -419,11 +462,11 @@ const Home = () => {
             {/* Typing Animation Effect */}
             <div className="mb-8">
               <h1 className="text-6xl md:text-8xl p-2 font-black mb-4 bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">
-                Chirag Gulati
+                Alex Doe
               </h1>
               <div className="text-2xl md:text-3xl text-gray-300 font-light mb-2">
                 <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-bold">
-                  Mobile Application Developer
+                  Web Application Developer
                 </span>
               </div>
               <div className="text-lg md:text-xl text-cyan-400 font-mono">
@@ -438,7 +481,6 @@ const Home = () => {
               </span>
               and
               <span className="text-pink-400 font-semibold">
-              
                 {` immersive experiences`}
               </span>
               . Specialized in React Native, and emerging technologies.
@@ -465,17 +507,17 @@ const Home = () => {
               {[
                 {
                   icon: Github,
-                  href: "https://github.com/chiraggulati16",
+                  href: "https://github.com/abc",
                   label: "GitHub",
                 },
                 {
                   icon: Linkedin,
-                  href: "https://www.linkedin.com/in/chirag-gulati-507412131/",
+                  href: "https://www.linkedin.com/in/abc",
                   label: "LinkedIn",
                 },
                 {
                   icon: Mail,
-                  href: "mailto:chirag.gulati282@gmail.com",
+                  href: "mailto:abc@gmail.com",
                   label: "Email",
                 },
               ].map(({ icon: Icon, href, label }) => (
@@ -536,7 +578,6 @@ const Home = () => {
                   with a relentless drive to push the boundaries of what's
                   possible in web development. My journey spans from
                   <span className="text-pink-400 font-semibold">
-                    
                     {` startup MVPs to enterprise-scale applications `}
                   </span>
                   serving millions of users.
@@ -544,7 +585,7 @@ const Home = () => {
                 <p className="text-xl text-gray-300 leading-relaxed">
                   I specialize in building
                   <span className="text-cyan-400 font-semibold">
-                   {` high-performance applications `}
+                    {` high-performance applications `}
                   </span>
                   using cutting-edge technologies. My expertise includes modern
                   React ecosystems, serverless architectures, and AI-powered
@@ -581,12 +622,11 @@ const Home = () => {
                   </div>
                   <div className="font-mono text-sm space-y-2">
                     <div className="text-purple-400">
-                      const <span className="text-white">developer</span> =
-                      {`{`}
+                      const <span className="text-white">developer</span> ={`{`}
                     </div>
                     <div className="ml-4 text-cyan-400">
                       name:
-                      <span className="text-green-400">'Chirag Gulati'</span>,
+                      <span className="text-green-400">'Alex Doe'</span>,
                     </div>
                     <div className="ml-4 text-cyan-400">
                       role:
@@ -938,48 +978,68 @@ const Home = () => {
           </p>
 
           {/* Contact Form */}
-          <div className="max-w-4xl mx-auto mb-16">
-            <div className="bg-gray-900/50 backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-purple-500/20 shadow-2xl">
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <input
-                    type="text"
-                    placeholder="Your Name"
-                    className="w-full p-4 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none transition-colors duration-300"
-                  />
+          <form method="POST" onSubmit={handleSubmit}>
+            <div className="max-w-4xl mx-auto mb-16">
+              <div className="bg-gray-900/50 backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-purple-500/20 shadow-2xl">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <div>
+                    <input
+                      name="name"
+                      onChange={handleChange}
+                      type="text"
+                      value={formData.name}
+                      required
+                      placeholder="Your Name"
+                      className="w-full p-4 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none transition-colors duration-300"
+                    />
+                  </div>
+                  <div>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="Your Email"
+                      className="w-full p-4 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none transition-colors duration-300"
+                      required
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <input
+                      type="text"
+                      name="subject"
+                      value={formData.subject}
+                      onChange={handleChange}
+                      placeholder="Project Subject"
+                      className="w-full p-4 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none transition-colors duration-300"
+                      required
+                    />
+                  </div>
+                  <div className="md:col-span-2">
+                    <textarea
+                      name="message"
+                      value={formData.message}
+                      onChange={handleChange}
+                      rows={6}
+                      placeholder="Tell me about your project..."
+                      className="w-full p-4 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none transition-colors duration-300 resize-none"
+                    ></textarea>
+                  </div>
                 </div>
-                <div>
-                  <input
-                    type="email"
-                    placeholder="Your Email"
-                    className="w-full p-4 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none transition-colors duration-300"
-                  />
-                </div>
-                <div className="md:col-span-2">
-                  <input
-                    type="text"
-                    placeholder="Project Subject"
-                    className="w-full p-4 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none transition-colors duration-300"
-                  />
-                </div>
-                <div className="md:col-span-2">
-                  <textarea
-                    rows={6}
-                    placeholder="Tell me about your project..."
-                    className="w-full p-4 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-purple-500 focus:outline-none transition-colors duration-300 resize-none"
-                  ></textarea>
-                </div>
-              </div>
 
-              <button className="group mt-8 px-12 py-4 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 rounded-full text-white font-bold text-lg transition-all duration-300 transform hover:scale-110 hover:shadow-2xl relative overflow-hidden">
-                <span className="relative z-10 flex items-center justify-center">
-                  Send Message
-                  <Send className="ml-3 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-              </button>
+                <button
+                  type="submit"
+                  className="group mt-8 px-12 py-4 bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500 rounded-full text-white font-bold text-lg transition-all duration-300 transform hover:scale-110 hover:shadow-2xl relative overflow-hidden"
+                >
+                  <span className="relative z-10 flex items-center justify-center">
+                    Send Message
+                    <Send className="ml-3 w-5 h-5 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                  </span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-cyan-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </button>
+              </div>
             </div>
-          </div>
+          </form>
 
           {/* Quick Contact Options */}
           <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
@@ -987,20 +1047,20 @@ const Home = () => {
               {
                 icon: Mail,
                 title: "Email",
-                subtitle: "mailto:chirag.gulati282@gmail.com",
-                href: "mailto:chirag.gulati282@gmail.com",
+                subtitle: "mailto:abc@gmail.com",
+                href: "mailto:abc@gmail.com",
               },
               {
                 icon: Github,
                 title: "GitHub",
-                subtitle: "/chiraggulati16",
-                href: "https://github.com/chiraggulati16",
+                subtitle: "/abc",
+                href: "https://github.com/abc",
               },
               {
                 icon: Linkedin,
                 title: "LinkedIn",
-                subtitle: "/in/chirag-gulati-507412131",
-                href: "https://www.linkedin.com/in/chirag-gulati-507412131/",
+                subtitle: "/in/abc",
+                href: "https://www.linkedin.com/in/abc",
               },
             ].map(({ icon: Icon, title, subtitle, href }) => (
               <a
@@ -1033,6 +1093,33 @@ const Home = () => {
           "Code is poetry, and every project is a masterpiece in progress."
         </p>
       </footer>
+
+      {showSuccessPopup ? (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg border-t-4 border-green-500">
+            <div className="flex items-center">
+              <svg
+                className="h-6 w-6 text-green-500 mr-2"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+              </svg>
+              <h3 className="text-lg font-semibold text-green-700">Success!</h3>
+            </div>
+            <p className="mt-2 text-gray-700">Message Send Successfully</p>
+            <button onClick={() => setShowSuccessPopup(false)} className="mt-4 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+              Close
+            </button>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };
