@@ -255,11 +255,11 @@ const Home = () => {
 
   const experience = [
     {
-      company: "ABC",
-      position: "Senior Developer",
-      duration: "02/2023 - 06/2024",
+      company: "Infosys Limited",
+      position: "Technology Analyst",
+      duration: "02/2023 - 09/2024",
 
-      technologies: ["React Native", "Javascript", "Typescript", "Next.js"],
+      technologies: ["React Native", "Javascript", "Typescript"],
       achievements: [
         "Develop and maintain high-performance React Native applications for iOS and Android platforms.",
         "Optimize app performance by profiling and identifying bottlenecks, implementing performance-enhancing techniques.",
@@ -270,9 +270,9 @@ const Home = () => {
       ],
     },
     {
-      company: "ABC",
+      company: "Softprodigy System Solutions",
       position: "Associate Software Engineer",
-      duration: "06/2021 - 01/2022",
+      duration: "06/2021 - 01/2023",
       technologies: ["React Native", "Javascript", "Android", "Java", "Kotlin"],
       achievements: [
         "Built responsive and interactive mobile applications using React Native.",
@@ -462,11 +462,11 @@ const Home = () => {
             {/* Typing Animation Effect */}
             <div className="mb-8">
               <h1 className="text-6xl md:text-8xl p-2 font-black mb-4 bg-gradient-to-r from-white via-purple-200 to-purple-400 bg-clip-text text-transparent">
-                Alex Doe
+                Chirag Gulati
               </h1>
               <div className="text-2xl md:text-3xl text-gray-300 font-light mb-2">
                 <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-bold">
-                  Web Application Developer
+                  Mobile Application Developer
                 </span>
               </div>
               <div className="text-lg md:text-xl text-cyan-400 font-mono">
@@ -507,17 +507,17 @@ const Home = () => {
               {[
                 {
                   icon: Github,
-                  href: "https://github.com/abc",
+                  href: "https://github.com/chiraggulati16",
                   label: "GitHub",
                 },
                 {
                   icon: Linkedin,
-                  href: "https://www.linkedin.com/in/abc",
+                  href: "https://www.linkedin.com/in/chirag-gulati-507412131/",
                   label: "LinkedIn",
                 },
                 {
                   icon: Mail,
-                  href: "mailto:abc@gmail.com",
+                  href: "mailto:chirag.gulati282@gmail.com",
                   label: "Email",
                 },
               ].map(({ icon: Icon, href, label }) => (
@@ -622,11 +622,12 @@ const Home = () => {
                   </div>
                   <div className="font-mono text-sm space-y-2">
                     <div className="text-purple-400">
-                      const <span className="text-white">developer</span> ={`{`}
+                      const <span className="text-white">developer</span> =
+                      {`{`}
                     </div>
                     <div className="ml-4 text-cyan-400">
                       name:
-                      <span className="text-green-400">'Alex Doe'</span>,
+                      <span className="text-green-400">'Chirag Gulati'</span>,
                     </div>
                     <div className="ml-4 text-cyan-400">
                       role:
@@ -1047,20 +1048,20 @@ const Home = () => {
               {
                 icon: Mail,
                 title: "Email",
-                subtitle: "mailto:abc@gmail.com",
-                href: "mailto:abc@gmail.com",
+                subtitle: "mailto:chirag.gulati282@gmail.com",
+                href: "mailto:chirag.gulati282@gmail.com",
               },
               {
                 icon: Github,
                 title: "GitHub",
-                subtitle: "/abc",
-                href: "https://github.com/abc",
+                subtitle: "/chiraggulati16",
+                href: "https://github.com/chiraggulati16",
               },
               {
                 icon: Linkedin,
                 title: "LinkedIn",
-                subtitle: "/in/abc",
-                href: "https://www.linkedin.com/in/abc",
+                subtitle: "/in/chirag-gulati-507412131",
+                href: "https://www.linkedin.com/in/chirag-gulati-507412131/",
               },
             ].map(({ icon: Icon, title, subtitle, href }) => (
               <a
